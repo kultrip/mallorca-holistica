@@ -1,0 +1,51 @@
+Project: Mallorca Holística (MVP)
+
+Goal
+Create a high-conversion, multilingual website that helps people in Mallorca find verified wellbeing professionals and events, with two search modes:
+
+Classic search (therapy / name / location + map)
+AI orientation search (natural language need → suggested therapies + professionals + related content)
+Important rules
+
+Visitors/users have NO accounts in MVP.
+Professionals and admins exist (login can be minimal/placeholder); main public site is the priority.
+Map provider: Mapbox (use a placeholder env var token).
+Languages: ES, CA, EN, DE. Implement i18n with a language switcher (default ES).
+Professional verification requires two docs: professional_id + national_id (DNI/NIE/passport). Show “verified” badges only when approved.
+Use these files as the source of truth
+
+API contract: openapi.yaml (all request/response shapes)
+Mock data: mocks/db.json
+AI orientation examples: mocks/orient_examples.json
+Pages to build
+
+Home (/)
+Hero with two search blocks (Classic + AI orientation)
+Community counter: number of approved + published professionals
+Trust section explaining verification
+Strong CTAs: “Encontrar un profesional” and “Publicar mi perfil”
+Directory (/professionals)
+List + filters (q, therapy, keyword, city)
+Map toggle with pins (Mapbox)
+Only show approved + published professionals
+Professional profile (/professionals/:id)
+Photo, bio, therapies, keywords, city + map
+Contact buttons (email/phone/website), social links
+External calendar link when present
+Therapies (/therapies, /therapies/:id)
+Therapy description + related professionals + related articles
+Activities (/activities, /activities/:id)
+Upcoming events list + city filter
+Event detail with external signupUrl
+AI orientation UI
+
+Build a screen using POST /ai/orient.
+In mock mode, read from orient_examples.json and show:
+detected keywords
+suggested therapies / professionals / contents
+“why” explanations
+a medical disclaimer
+Implementation guidance
+
+Start in mock mode using mocks/db.json (do not block on a real backend).
+Keep an API client layer so switching from mocks → real API is just changing API_BASE_URL / USE_MOCKS.

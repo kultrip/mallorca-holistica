@@ -1,0 +1,54 @@
+[
+  {
+    "id": "ex_0001",
+    "input": {
+      "locale": "es",
+      "query": "Estoy estresado y me cuesta dormir. ¿Qué me recomiendas?"
+    },
+    "output": {
+      "detectedKeywordIds": ["kw_0001", "kw_0003"],
+      "suggestedTherapyIds": ["th_0005", "th_0007", "th_0003", "th_0004"],
+      "suggestedProfessionalIds": ["pro_0003", "pro_0004"],
+      "suggestedContentIds": ["ct_0003", "ct_0002", "ct_0001"],
+      "explanations": {
+        "keywords": [
+          { "keywordId": "kw_0001", "why": "Menciona estrés." },
+          { "keywordId": "kw_0003", "why": "Menciona dificultad para dormir." }
+        ],
+        "therapies": [
+          { "therapyId": "th_0005", "why": "Frecuente apoyo para estrés y regulación emocional." },
+          { "therapyId": "th_0007", "why": "Técnicas de respiración para calmar el sistema nervioso." },
+          { "therapyId": "th_0003", "why": "Asociada a estrés e insomnio en la base de keywords." },
+          { "therapyId": "th_0004", "why": "Algunas personas la usan para relajación." }
+        ],
+        "professionals": [
+          { "professionalId": "pro_0003", "why": "Trabaja con estrés/ansiedad y breathwork." },
+          { "professionalId": "pro_0004", "why": "Acupuntura + keywords: estrés/insomnio (pendiente de verificación en este mock)." }
+        ]
+      },
+      "disclaimer": "Esta orientación es informativa y no sustituye atención médica. Si tus síntomas son intensos o persistentes, consulta a un profesional sanitario."
+    }
+  },
+  {
+    "id": "ex_0002",
+    "input": {
+      "locale": "en",
+      "query": "I have neck tension and headaches after work."
+    },
+    "output": {
+      "detectedKeywordIds": ["kw_0005", "kw_0006", "kw_0001"],
+      "suggestedTherapyIds": ["th_0001", "th_0002", "th_0006"],
+      "suggestedProfessionalIds": ["pro_0001", "pro_0002", "pro_0005"],
+      "suggestedContentIds": [],
+      "explanations": {
+        "keywords": [
+          { "keywordId": "kw_0005", "why": "Neck tension." },
+          { "keywordId": "kw_0006", "why": "Headaches." },
+          { "keywordId": "kw_0001", "why": "After work suggests stress/tension." }
+        ]
+      },
+      "disclaimer": "Informational guidance only; not medical advice."
+    }
+  }
+]
+

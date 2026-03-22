@@ -1,0 +1,593 @@
+{
+  "meta": {
+    "project": "Mallorca Holística",
+    "generatedAt": "2026-03-22T00:00:00+01:00",
+    "notes": [
+      "Mock dataset for frontend development (Lovable-friendly).",
+      "MVP has no user accounts.",
+      "Verification docs for MVP: professional_id + national_id."
+    ]
+  },
+  "plans": [
+    {
+      "id": "plan_free",
+      "code": "FREE",
+      "name": "Free",
+      "eventLimitPerYear": 2,
+      "features": {
+        "profile": true,
+        "search": true,
+        "map": true,
+        "directContact": true,
+        "externalCalendarUrl": false,
+        "reviews": false,
+        "basicMetrics": false
+      }
+    },
+    {
+      "id": "plan_pro",
+      "code": "PRO",
+      "name": "Pro",
+      "eventLimitPerYear": 12,
+      "features": {
+        "profile": true,
+        "search": true,
+        "map": true,
+        "directContact": true,
+        "externalCalendarUrl": true,
+        "reviews": true,
+        "basicMetrics": true
+      }
+    },
+    {
+      "id": "plan_premium",
+      "code": "PREMIUM",
+      "name": "Premium",
+      "eventLimitPerYear": null,
+      "features": {
+        "profile": true,
+        "search": true,
+        "map": true,
+        "directContact": true,
+        "externalCalendarUrl": true,
+        "reviews": true,
+        "basicMetrics": true
+      }
+    }
+  ],
+  "admins": [
+    {
+      "id": "admin_0001",
+      "email": "admin@mallorcaholistica.test",
+      "displayName": "Admin Mallorca Holística"
+    }
+  ],
+  "therapies": [
+    {
+      "id": "th_0001",
+      "category": "bodywork",
+      "name": { "es": "Osteopatía", "ca": "Osteopatia", "en": "Osteopathy", "de": "Osteopathie" },
+      "description": {
+        "es": "Terapia manual orientada a mejorar la movilidad y aliviar tensiones del sistema músculo-esquelético.",
+        "ca": "Teràpia manual orientada a millorar la mobilitat i alleujar tensions del sistema múscul-esquelètic.",
+        "en": "Hands-on therapy focused on mobility and relieving musculoskeletal tension.",
+        "de": "Manuelle Therapie zur Verbesserung der Beweglichkeit und zur Linderung muskulärer Spannungen."
+      }
+    },
+    {
+      "id": "th_0002",
+      "category": "bodywork",
+      "name": { "es": "Quiromasaje", "ca": "Quiromassatge", "en": "Therapeutic Massage", "de": "Therapeutische Massage" },
+      "description": {
+        "es": "Masaje terapéutico para relajar musculatura y favorecer el bienestar general.",
+        "ca": "Massatge terapèutic per relaxar la musculatura i afavorir el benestar general.",
+        "en": "Therapeutic massage to relax muscles and support overall wellbeing.",
+        "de": "Therapeutische Massage zur Muskelentspannung und allgemeinen Unterstützung des Wohlbefindens."
+      }
+    },
+    {
+      "id": "th_0003",
+      "category": "traditional",
+      "name": { "es": "Acupuntura", "ca": "Acupuntura", "en": "Acupuncture", "de": "Akupunktur" },
+      "description": {
+        "es": "Técnica de la medicina tradicional china con agujas finas aplicada por profesionales cualificados.",
+        "ca": "Tècnica de la medicina tradicional xinesa amb agulles fines aplicada per professionals qualificats.",
+        "en": "Traditional Chinese medicine technique using fine needles applied by qualified professionals.",
+        "de": "Technik der traditionellen chinesischen Medizin mit feinen Nadeln durch qualifizierte Fachkräfte."
+      }
+    },
+    {
+      "id": "th_0004",
+      "category": "energy",
+      "name": { "es": "Reiki", "ca": "Reiki", "en": "Reiki", "de": "Reiki" },
+      "description": {
+        "es": "Práctica energética basada en la imposición de manos para promover relajación y equilibrio.",
+        "ca": "Pràctica energètica basada en la imposició de mans per promoure relaxació i equilibri.",
+        "en": "Energy practice using hands-on/near-body techniques to promote relaxation and balance.",
+        "de": "Energiearbeit mit Handauflegen zur Förderung von Entspannung und Balance."
+      }
+    },
+    {
+      "id": "th_0005",
+      "category": "mind",
+      "name": { "es": "Mindfulness", "ca": "Mindfulness", "en": "Mindfulness", "de": "Achtsamkeit" },
+      "description": {
+        "es": "Entrenamiento de atención plena para gestionar estrés y mejorar la regulación emocional.",
+        "ca": "Entrenament d'atenció plena per gestionar l'estrès i millorar la regulació emocional.",
+        "en": "Attention training to manage stress and improve emotional regulation.",
+        "de": "Aufmerksamkeitstraining zur Stressbewältigung und emotionalen Regulation."
+      }
+    },
+    {
+      "id": "th_0006",
+      "category": "movement",
+      "name": { "es": "Yoga terapéutico", "ca": "Ioga terapèutic", "en": "Therapeutic Yoga", "de": "Therapeutisches Yoga" },
+      "description": {
+        "es": "Práctica adaptada orientada a movilidad, respiración y reducción de dolor/tensión.",
+        "ca": "Pràctica adaptada orientada a mobilitat, respiració i reducció de dolor/tensió.",
+        "en": "Adapted practice focused on mobility, breathing, and reducing pain/tension.",
+        "de": "Angepasste Praxis für Beweglichkeit, Atmung und Reduktion von Schmerz/Spannung."
+      }
+    },
+    {
+      "id": "th_0007",
+      "category": "breath",
+      "name": { "es": "Breathwork", "ca": "Breathwork", "en": "Breathwork", "de": "Atemarbeit" },
+      "description": {
+        "es": "Técnicas de respiración para regular el sistema nervioso y mejorar bienestar.",
+        "ca": "Tècniques de respiració per regular el sistema nerviós i millorar el benestar.",
+        "en": "Breathing techniques to regulate the nervous system and improve wellbeing.",
+        "de": "Atemtechniken zur Regulation des Nervensystems und Verbesserung des Wohlbefindens."
+      }
+    },
+    {
+      "id": "th_0008",
+      "category": "mind",
+      "name": { "es": "Coaching", "ca": "Coaching", "en": "Coaching", "de": "Coaching" },
+      "description": {
+        "es": "Acompañamiento para objetivos y cambios de hábitos mediante conversaciones estructuradas.",
+        "ca": "Acompanyament per objectius i canvis d'hàbits mitjançant converses estructurades.",
+        "en": "Support for goals and habit change through structured conversations.",
+        "de": "Begleitung bei Zielen und Gewohnheitsänderungen durch strukturierte Gespräche."
+      }
+    },
+    {
+      "id": "th_0009",
+      "category": "energy",
+      "name": { "es": "Constelaciones familiares", "ca": "Constel·lacions familiars", "en": "Family Constellations", "de": "Familienaufstellungen" },
+      "description": {
+        "es": "Enfoque sistémico orientado a explorar dinámicas familiares y patrones relacionales.",
+        "ca": "Enfocament sistèmic orientat a explorar dinàmiques familiars i patrons relacionals.",
+        "en": "Systemic approach to explore family dynamics and relational patterns.",
+        "de": "Systemischer Ansatz zur Erkundung familiärer Dynamiken und Beziehungsmuster."
+      }
+    },
+    {
+      "id": "th_0010",
+      "category": "bodywork",
+      "name": { "es": "Drenaje linfático", "ca": "Drenatge limfàtic", "en": "Lymphatic Drainage", "de": "Lymphdrainage" },
+      "description": {
+        "es": "Técnica manual suave orientada a favorecer la circulación linfática.",
+        "ca": "Tècnica manual suau orientada a afavorir la circulació limfàtica.",
+        "en": "Gentle manual technique aimed at supporting lymphatic circulation.",
+        "de": "Sanfte manuelle Technik zur Unterstützung des Lymphflusses."
+      }
+    },
+    {
+      "id": "th_0011",
+      "category": "movement",
+      "name": { "es": "Pilates", "ca": "Pilates", "en": "Pilates", "de": "Pilates" },
+      "description": {
+        "es": "Método de movimiento orientado a fuerza, postura y control.",
+        "ca": "Mètode de moviment orientat a força, postura i control.",
+        "en": "Movement method focused on strength, posture, and control.",
+        "de": "Bewegungsmethode für Kraft, Haltung und Kontrolle."
+      }
+    },
+    {
+      "id": "th_0012",
+      "category": "mind",
+      "name": { "es": "Naturopatía", "ca": "Naturopatia", "en": "Naturopathy", "de": "Naturheilkunde" },
+      "description": {
+        "es": "Acompañamiento en hábitos de salud con enfoque integrativo (sin sustituir atención médica).",
+        "ca": "Acompanyament en hàbits de salut amb enfoc integratiu (sense substituir atenció mèdica).",
+        "en": "Integrative health habits support (not a substitute for medical care).",
+        "de": "Integrative Unterstützung für Gesundheitsgewohnheiten (kein Ersatz für medizinische Versorgung)."
+      }
+    }
+  ],
+  "keywords": [
+    {
+      "id": "kw_0001",
+      "labels": { "es": "estrés", "ca": "estrès", "en": "stress", "de": "Stress" },
+      "synonyms": ["estres", "tension", "agotamiento", "burnout"]
+    },
+    {
+      "id": "kw_0002",
+      "labels": { "es": "ansiedad", "ca": "ansietat", "en": "anxiety", "de": "Angst" },
+      "synonyms": ["nervios", "ataque de ansiedad", "inquietud"]
+    },
+    {
+      "id": "kw_0003",
+      "labels": { "es": "insomnio", "ca": "insomni", "en": "insomnia", "de": "Schlaflosigkeit" },
+      "synonyms": ["no puedo dormir", "mal dormir", "sueño ligero"]
+    },
+    {
+      "id": "kw_0004",
+      "labels": { "es": "dolor de espalda", "ca": "mal d'esquena", "en": "back pain", "de": "Rückenschmerzen" },
+      "synonyms": ["lumbalgia", "dorsalgia"]
+    },
+    {
+      "id": "kw_0005",
+      "labels": { "es": "tensión cervical", "ca": "tensió cervical", "en": "neck tension", "de": "Nackenverspannung" },
+      "synonyms": ["dolor cervical", "cervicales"]
+    },
+    {
+      "id": "kw_0006",
+      "labels": { "es": "dolor de cabeza", "ca": "mal de cap", "en": "headache", "de": "Kopfschmerzen" },
+      "synonyms": ["migraña", "cefalea"]
+    },
+    {
+      "id": "kw_0007",
+      "labels": { "es": "digestión", "ca": "digestió", "en": "digestion", "de": "Verdauung" },
+      "synonyms": ["hinchazón", "pesadez", "malestar digestivo"]
+    },
+    {
+      "id": "kw_0008",
+      "labels": { "es": "dolor muscular", "ca": "dolor muscular", "en": "muscle pain", "de": "Muskelschmerzen" },
+      "synonyms": ["contracturas", "sobrecarga"]
+    },
+    {
+      "id": "kw_0009",
+      "labels": { "es": "relajación", "ca": "relaxació", "en": "relaxation", "de": "Entspannung" },
+      "synonyms": ["calma", "descanso"]
+    },
+    {
+      "id": "kw_0010",
+      "labels": { "es": "duelo emocional", "ca": "dol emocional", "en": "grief", "de": "Trauer" },
+      "synonyms": ["pérdida", "separación"]
+    },
+    {
+      "id": "kw_0011",
+      "labels": { "es": "autoestima", "ca": "autoestima", "en": "self-esteem", "de": "Selbstwertgefühl" },
+      "synonyms": ["confianza", "autovaloración"]
+    },
+    {
+      "id": "kw_0012",
+      "labels": { "es": "postura", "ca": "postura", "en": "posture", "de": "Haltung" },
+      "synonyms": ["higiene postural"]
+    },
+    {
+      "id": "kw_0013",
+      "labels": { "es": "energía baja", "ca": "energia baixa", "en": "low energy", "de": "Energielosigkeit" },
+      "synonyms": ["cansancio", "fatiga"]
+    },
+    {
+      "id": "kw_0014",
+      "labels": { "es": "respiración", "ca": "respiració", "en": "breathing", "de": "Atmung" },
+      "synonyms": ["respirar", "ahogo", "opresión"]
+    },
+    {
+      "id": "kw_0015",
+      "labels": { "es": "gestión emocional", "ca": "gestió emocional", "en": "emotional regulation", "de": "Emotionsregulation" },
+      "synonyms": ["emociones", "regulación emocional"]
+    },
+    {
+      "id": "kw_0016",
+      "labels": { "es": "hábitos saludables", "ca": "hàbits saludables", "en": "healthy habits", "de": "Gesunde Gewohnheiten" },
+      "synonyms": ["rutina", "estilo de vida"]
+    }
+  ],
+  "therapyKeywords": [
+    { "id": "tk_0001", "therapyId": "th_0003", "keywordId": "kw_0001", "weight": 0.7 },
+    { "id": "tk_0002", "therapyId": "th_0003", "keywordId": "kw_0003", "weight": 0.5 },
+    { "id": "tk_0003", "therapyId": "th_0001", "keywordId": "kw_0004", "weight": 0.9 },
+    { "id": "tk_0004", "therapyId": "th_0001", "keywordId": "kw_0005", "weight": 0.7 },
+    { "id": "tk_0005", "therapyId": "th_0002", "keywordId": "kw_0008", "weight": 0.8 },
+    { "id": "tk_0006", "therapyId": "th_0002", "keywordId": "kw_0009", "weight": 0.6 },
+    { "id": "tk_0007", "therapyId": "th_0004", "keywordId": "kw_0001", "weight": 0.6 },
+    { "id": "tk_0008", "therapyId": "th_0004", "keywordId": "kw_0002", "weight": 0.4 },
+    { "id": "tk_0009", "therapyId": "th_0005", "keywordId": "kw_0001", "weight": 0.8 },
+    { "id": "tk_0010", "therapyId": "th_0005", "keywordId": "kw_0015", "weight": 0.6 },
+    { "id": "tk_0011", "therapyId": "th_0006", "keywordId": "kw_0012", "weight": 0.7 },
+    { "id": "tk_0012", "therapyId": "th_0006", "keywordId": "kw_0005", "weight": 0.4 },
+    { "id": "tk_0013", "therapyId": "th_0007", "keywordId": "kw_0014", "weight": 0.9 },
+    { "id": "tk_0014", "therapyId": "th_0007", "keywordId": "kw_0002", "weight": 0.5 },
+    { "id": "tk_0015", "therapyId": "th_0012", "keywordId": "kw_0016", "weight": 0.8 },
+    { "id": "tk_0016", "therapyId": "th_0012", "keywordId": "kw_0007", "weight": 0.6 }
+  ],
+  "professionals": [
+    {
+      "id": "pro_0001",
+      "firstName": "Carlos",
+      "lastName": "Martí",
+      "displayName": "Carlos Martí",
+      "photoUrl": "https://picsum.photos/seed/mh-pro-0001/600/600",
+      "bio": {
+        "es": "Osteópata y terapeuta manual. Trabajo con dolor de espalda, tensiones y movilidad.",
+        "ca": "Osteòpata i terapeuta manual. Treball amb mal d'esquena, tensions i mobilitat.",
+        "en": "Osteopath and manual therapist. I work with back pain, tension, and mobility.",
+        "de": "Osteopath und Manualtherapeut. Fokus auf Rückenschmerzen, Verspannungen und Beweglichkeit."
+      },
+      "email": "carlos.marti@mallorcaholistica.test",
+      "phone": "+34 600 000 001",
+      "website": "https://example.com/carlos-marti",
+      "city": "Palma",
+      "location": { "lat": 39.5696, "lng": 2.6502 },
+      "verificationStatus": "approved",
+      "planCode": "PREMIUM",
+      "externalCalendarUrl": "https://calendly.com/example/carlos-marti",
+      "social": { "instagram": "https://instagram.com/example.carlos" },
+      "createdAt": "2026-02-10T09:30:00+01:00",
+      "publishedAt": "2026-02-15T12:00:00+01:00"
+    },
+    {
+      "id": "pro_0002",
+      "firstName": "Nadège",
+      "lastName": "Dubois",
+      "displayName": "Nadège Dubois",
+      "photoUrl": "https://picsum.photos/seed/mh-pro-0002/600/600",
+      "bio": {
+        "es": "Masaje terapéutico y drenaje linfático. Enfoque en relajación y bienestar.",
+        "ca": "Massatge terapèutic i drenatge limfàtic. Enfoc en relaxació i benestar.",
+        "en": "Therapeutic massage and lymphatic drainage, focused on relaxation and wellbeing.",
+        "de": "Therapeutische Massage und Lymphdrainage, Fokus auf Entspannung und Wohlbefinden."
+      },
+      "email": "nadege.dubois@mallorcaholistica.test",
+      "phone": "+34 600 000 002",
+      "website": "https://example.com/nadege-dubois",
+      "city": "Palma",
+      "location": { "lat": 39.5750, "lng": 2.6540 },
+      "verificationStatus": "approved",
+      "planCode": "PRO",
+      "externalCalendarUrl": "https://calendar.google.com/calendar/u/0/r?cid=example",
+      "social": { "instagram": "https://instagram.com/example.nadege" },
+      "createdAt": "2026-02-05T10:10:00+01:00",
+      "publishedAt": "2026-02-20T12:00:00+01:00"
+    },
+    {
+      "id": "pro_0003",
+      "firstName": "Ana",
+      "lastName": "Pons",
+      "displayName": "Ana Pons",
+      "photoUrl": "https://picsum.photos/seed/mh-pro-0003/600/600",
+      "bio": {
+        "es": "Instructora de mindfulness y breathwork para estrés y ansiedad.",
+        "ca": "Instructora de mindfulness i breathwork per estrès i ansietat.",
+        "en": "Mindfulness and breathwork instructor for stress and anxiety.",
+        "de": "Achtsamkeits- und Atemarbeits-Instruktorin bei Stress und Angst."
+      },
+      "email": "ana.pons@mallorcaholistica.test",
+      "phone": "+34 600 000 003",
+      "website": "https://example.com/ana-pons",
+      "city": "Inca",
+      "location": { "lat": 39.7211, "lng": 2.9109 },
+      "verificationStatus": "approved",
+      "planCode": "FREE",
+      "externalCalendarUrl": null,
+      "social": { "instagram": "https://instagram.com/example.ana" },
+      "createdAt": "2026-03-01T16:45:00+01:00",
+      "publishedAt": "2026-03-10T10:00:00+01:00"
+    },
+    {
+      "id": "pro_0004",
+      "firstName": "Miquel",
+      "lastName": "Servera",
+      "displayName": "Miquel Servera",
+      "photoUrl": "https://picsum.photos/seed/mh-pro-0004/600/600",
+      "bio": {
+        "es": "Acupuntor. Trabajo con estrés, sueño y digestión.",
+        "ca": "Acupuntor. Treball amb estrès, son i digestió.",
+        "en": "Acupuncturist working with stress, sleep, and digestion.",
+        "de": "Akupunkteur mit Fokus auf Stress, Schlaf und Verdauung."
+      },
+      "email": "miquel.servera@mallorcaholistica.test",
+      "phone": "+34 600 000 004",
+      "website": "https://example.com/miquel-servera",
+      "city": "Manacor",
+      "location": { "lat": 39.5690, "lng": 3.2090 },
+      "verificationStatus": "pending",
+      "planCode": "FREE",
+      "externalCalendarUrl": null,
+      "social": {},
+      "createdAt": "2026-03-18T09:00:00+01:00",
+      "publishedAt": null
+    },
+    {
+      "id": "pro_0005",
+      "firstName": "Sofia",
+      "lastName": "Klein",
+      "displayName": "Sofia Klein",
+      "photoUrl": "https://picsum.photos/seed/mh-pro-0005/600/600",
+      "bio": {
+        "es": "Yoga terapéutico y pilates para postura y movilidad.",
+        "ca": "Ioga terapèutic i pilates per postura i mobilitat.",
+        "en": "Therapeutic yoga and pilates for posture and mobility.",
+        "de": "Therapeutisches Yoga und Pilates für Haltung und Beweglichkeit."
+      },
+      "email": "sofia.klein@mallorcaholistica.test",
+      "phone": "+34 600 000 005",
+      "website": "https://example.com/sofia-klein",
+      "city": "Sóller",
+      "location": { "lat": 39.7676, "lng": 2.7154 },
+      "verificationStatus": "approved",
+      "planCode": "PRO",
+      "externalCalendarUrl": "https://calendly.com/example/sofia-klein",
+      "social": { "instagram": "https://instagram.com/example.sofia" },
+      "createdAt": "2026-02-22T12:20:00+01:00",
+      "publishedAt": "2026-02-28T11:00:00+01:00"
+    }
+  ],
+  "professionalTherapies": [
+    { "id": "pt_0001", "professionalId": "pro_0001", "therapyId": "th_0001" },
+    { "id": "pt_0002", "professionalId": "pro_0001", "therapyId": "th_0011" },
+    { "id": "pt_0003", "professionalId": "pro_0002", "therapyId": "th_0002" },
+    { "id": "pt_0004", "professionalId": "pro_0002", "therapyId": "th_0010" },
+    { "id": "pt_0005", "professionalId": "pro_0003", "therapyId": "th_0005" },
+    { "id": "pt_0006", "professionalId": "pro_0003", "therapyId": "th_0007" },
+    { "id": "pt_0007", "professionalId": "pro_0004", "therapyId": "th_0003" },
+    { "id": "pt_0008", "professionalId": "pro_0005", "therapyId": "th_0006" },
+    { "id": "pt_0009", "professionalId": "pro_0005", "therapyId": "th_0011" }
+  ],
+  "professionalKeywords": [
+    { "id": "pk_0001", "professionalId": "pro_0001", "keywordId": "kw_0004" },
+    { "id": "pk_0002", "professionalId": "pro_0001", "keywordId": "kw_0005" },
+    { "id": "pk_0003", "professionalId": "pro_0001", "keywordId": "kw_0012" },
+    { "id": "pk_0004", "professionalId": "pro_0002", "keywordId": "kw_0008" },
+    { "id": "pk_0005", "professionalId": "pro_0002", "keywordId": "kw_0009" },
+    { "id": "pk_0006", "professionalId": "pro_0003", "keywordId": "kw_0001" },
+    { "id": "pk_0007", "professionalId": "pro_0003", "keywordId": "kw_0002" },
+    { "id": "pk_0008", "professionalId": "pro_0003", "keywordId": "kw_0014" },
+    { "id": "pk_0009", "professionalId": "pro_0004", "keywordId": "kw_0001" },
+    { "id": "pk_0010", "professionalId": "pro_0004", "keywordId": "kw_0003" },
+    { "id": "pk_0011", "professionalId": "pro_0004", "keywordId": "kw_0007" },
+    { "id": "pk_0012", "professionalId": "pro_0005", "keywordId": "kw_0012" },
+    { "id": "pk_0013", "professionalId": "pro_0005", "keywordId": "kw_0005" }
+  ],
+  "verificationDocuments": [
+    {
+      "id": "vd_0001",
+      "professionalId": "pro_0004",
+      "type": "professional_id",
+      "status": "pending",
+      "fileName": "pro-id-miquel.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 184233,
+      "uploadedAt": "2026-03-18T09:10:00+01:00",
+      "reviewedAt": null,
+      "reviewedByAdminId": null
+    },
+    {
+      "id": "vd_0002",
+      "professionalId": "pro_0004",
+      "type": "national_id",
+      "status": "pending",
+      "fileName": "dni-miquel.jpg",
+      "mimeType": "image/jpeg",
+      "sizeBytes": 84211,
+      "uploadedAt": "2026-03-18T09:12:00+01:00",
+      "reviewedAt": null,
+      "reviewedByAdminId": null
+    }
+  ],
+  "activities": [
+    {
+      "id": "evt_0001",
+      "professionalId": "pro_0003",
+      "type": "taller",
+      "title": {
+        "es": "Breathwork para calmar la ansiedad",
+        "ca": "Breathwork per calmar l'ansietat",
+        "en": "Breathwork to calm anxiety",
+        "de": "Atemarbeit zur Beruhigung von Angst"
+      },
+      "description": {
+        "es": "Sesión grupal de respiración guiada y relajación. Nivel inicial.",
+        "ca": "Sessió grupal de respiració guiada i relaxació. Nivell inicial.",
+        "en": "Group session with guided breathing and relaxation. Beginner-friendly.",
+        "de": "Gruppensitzung mit geführter Atmung und Entspannung. Für Einsteiger geeignet."
+      },
+      "startsAt": "2026-04-12T18:00:00+02:00",
+      "locationName": "Sala Calma Inca",
+      "city": "Inca",
+      "address": "Carrer Example 12",
+      "location": { "lat": 39.7206, "lng": 2.9102 },
+      "signupUrl": "https://example.com/event/evt_0001"
+    },
+    {
+      "id": "evt_0002",
+      "professionalId": "pro_0005",
+      "type": "curso",
+      "title": {
+        "es": "Yoga terapéutico (columna y cervicales)",
+        "ca": "Ioga terapèutic (columna i cervicals)",
+        "en": "Therapeutic yoga (spine & neck)",
+        "de": "Therapeutisches Yoga (Wirbelsäule & Nacken)"
+      },
+      "description": {
+        "es": "Práctica adaptada enfocada en movilidad y alivio de tensión cervical.",
+        "ca": "Pràctica adaptada enfocada en mobilitat i alleujament de tensió cervical.",
+        "en": "Adapted practice focused on mobility and neck tension relief.",
+        "de": "Angepasste Praxis mit Fokus auf Beweglichkeit und Nackenentspannung."
+      },
+      "startsAt": "2026-04-20T10:00:00+02:00",
+      "locationName": "Estudi Sóller",
+      "city": "Sóller",
+      "address": "Plaça Example 3",
+      "location": { "lat": 39.7673, "lng": 2.7151 },
+      "signupUrl": "https://example.com/event/evt_0002"
+    },
+    {
+      "id": "evt_0003",
+      "professionalId": "pro_0002",
+      "type": "taller",
+      "title": {
+        "es": "Masaje facial y relajación",
+        "ca": "Massatge facial i relaxació",
+        "en": "Facial massage & relaxation",
+        "de": "Gesichtsmassage & Entspannung"
+      },
+      "description": {
+        "es": "Taller práctico con técnicas suaves para soltar tensión y descansar mejor.",
+        "ca": "Taller pràctic amb tècniques suaus per deixar anar tensió i descansar millor.",
+        "en": "Practical workshop with gentle techniques to release tension and sleep better.",
+        "de": "Praktischer Workshop mit sanften Techniken zum Lösen von Verspannungen und besserem Schlaf."
+      },
+      "startsAt": "2026-05-03T17:00:00+02:00",
+      "locationName": "Centro Bienestar Palma",
+      "city": "Palma",
+      "address": "Avinguda Example 8",
+      "location": { "lat": 39.5712, "lng": 2.6487 },
+      "signupUrl": "https://example.com/event/evt_0003"
+    }
+  ],
+  "contents": [
+    {
+      "id": "ct_0001",
+      "therapyId": "th_0004",
+      "slug": "que-es-reiki",
+      "title": { "es": "¿Qué es Reiki?", "ca": "Què és Reiki?", "en": "What is Reiki?", "de": "Was ist Reiki?" },
+      "body": {
+        "es": "Reiki es una práctica energética centrada en promover relajación. Esta información es orientativa.",
+        "ca": "Reiki és una pràctica energètica centrada en promoure relaxació. Aquesta informació és orientativa.",
+        "en": "Reiki is an energy practice focused on relaxation. This content is informational.",
+        "de": "Reiki ist eine Energiearbeit mit Fokus auf Entspannung. Diese Inhalte sind informativ."
+      }
+    },
+    {
+      "id": "ct_0002",
+      "therapyId": "th_0003",
+      "slug": "acupuntura-para-estres",
+      "title": {
+        "es": "Acupuntura y estrés",
+        "ca": "Acupuntura i estrès",
+        "en": "Acupuncture and stress",
+        "de": "Akupunktur und Stress"
+      },
+      "body": {
+        "es": "Una guía breve sobre cómo algunas personas utilizan acupuntura como apoyo al bienestar.",
+        "ca": "Una guia breu sobre com algunes persones utilitzen l'acupuntura com a suport al benestar.",
+        "en": "A short guide on how some people use acupuncture as wellbeing support.",
+        "de": "Ein kurzer Leitfaden, wie manche Menschen Akupunktur zur Unterstützung des Wohlbefindens nutzen."
+      }
+    },
+    {
+      "id": "ct_0003",
+      "therapyId": "th_0007",
+      "slug": "breathwork-para-ansiedad",
+      "title": {
+        "es": "Breathwork para ansiedad",
+        "ca": "Breathwork per ansietat",
+        "en": "Breathwork for anxiety",
+        "de": "Atemarbeit bei Angst"
+      },
+      "body": {
+        "es": "La respiración puede influir en el sistema nervioso. Aprende conceptos básicos y cuándo pedir ayuda profesional.",
+        "ca": "La respiració pot influir en el sistema nerviós. Aprèn conceptes bàsics i quan demanar ajuda professional.",
+        "en": "Breathing can influence the nervous system. Learn basics and when to seek professional help.",
+        "de": "Atmung kann das Nervensystem beeinflussen. Grundlagen und wann man professionelle Hilfe suchen sollte."
+      }
+    }
+  ]
+}
+

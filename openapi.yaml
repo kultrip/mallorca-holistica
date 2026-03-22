@@ -1,0 +1,1054 @@
+openapi: 3.0.3
+info:
+  title: Mallorca Holística API
+  version: 0.1.0
+  description: |
+    API contract for Mallorca Holística (MVP).
+
+    Notes:
+    - Visitors/users have **no accounts** in the MVP.
+    - Professionals and admins authenticate via bearer tokens.
+    - Professional verification requires: `professional_id` + `national_id` (DNI/NIE/passport).
+    - Initial locales: `es`, `ca`, `en`, `de`.
+servers:
+  - url: http://localhost:3000
+    description: Local
+  - url: https://staging.api.mallorcaholistica.example
+    description: Staging (placeholder)
+tags:
+  - name: Health
+  - name: Public
+  - name: Professional
+  - name: Admin
+  - name: AI
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      operationId: healthCheck
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  time: { type: string, format: date-time }
+                required: [ok, time]
+              examples:
+                ok:
+                  value: { ok: true, time: "2026-03-22T10:00:00+01:00" }
+
+  /public/plans:
+    get:
+      tags: [Public]
+      summary: List subscription plans (read-only)
+      operationId: publicListPlans
+      responses:
+        "200":
+          description: Plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Plan" }
+
+  /public/therapies:
+    get:
+      tags: [Public]
+      summary: List therapies
+      operationId: publicListTherapies
+      parameters:
+        - $ref: "#/components/parameters/Locale"
+        - in: query
+          name: category
+          schema: { type: string }
+          description: Optional therapy category filter
+      responses:
+        "200":
+          description: Therapies
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Therapy" }
+
+  /public/therapies/{therapyId}:
+    get:
+      tags: [Public]
+      summary: Get therapy by id
+      operationId: publicGetTherapy
+      parameters:
+        - $ref: "#/components/parameters/TherapyId"
+        - $ref: "#/components/parameters/Locale"
+      responses:
+        "200":
+          description: Therapy
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Therapy" }
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /public/contents:
+    get:
+      tags: [Public]
+      summary: List contents (therapy library articles)
+      operationId: publicListContents
+      parameters:
+        - $ref: "#/components/parameters/Locale"
+        - in: query
+          name: therapyId
+          schema: { type: string }
+      responses:
+        "200":
+          description: Contents
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Content" }
+
+  /public/contents/{contentId}:
+    get:
+      tags: [Public]
+      summary: Get content by id
+      operationId: publicGetContent
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+        - $ref: "#/components/parameters/Locale"
+      responses:
+        "200":
+          description: Content
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Content" }
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /public/professionals:
+    get:
+      tags: [Public]
+      summary: Search/list professionals (classic search)
+      operationId: publicListProfessionals
+      parameters:
+        - $ref: "#/components/parameters/Locale"
+        - in: query
+          name: q
+          schema: { type: string }
+          description: Search by name / keyword / free text
+        - in: query
+          name: therapyId
+          schema: { type: string }
+        - in: query
+          name: keywordId
+          schema: { type: string }
+        - in: query
+          name: city
+          schema: { type: string }
+        - in: query
+          name: lat
+          schema: { type: number, format: double }
+        - in: query
+          name: lng
+          schema: { type: number, format: double }
+        - in: query
+          name: radiusKm
+          schema: { type: number, format: double, minimum: 0 }
+          description: When lat/lng provided, filters within radius
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Paginated professionals
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedProfessionalListItem"
+
+  /public/professionals/{professionalId}:
+    get:
+      tags: [Public]
+      summary: Get professional profile (public view)
+      operationId: publicGetProfessional
+      parameters:
+        - $ref: "#/components/parameters/ProfessionalId"
+        - $ref: "#/components/parameters/Locale"
+      responses:
+        "200":
+          description: Professional
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProfessionalPublic" }
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /public/activities:
+    get:
+      tags: [Public]
+      summary: List upcoming activities/events
+      operationId: publicListActivities
+      parameters:
+        - $ref: "#/components/parameters/Locale"
+        - in: query
+          name: from
+          schema: { type: string, format: date-time }
+          description: Start date-time inclusive (defaults to now)
+        - in: query
+          name: to
+          schema: { type: string, format: date-time }
+          description: End date-time inclusive (optional)
+        - in: query
+          name: city
+          schema: { type: string }
+        - in: query
+          name: therapyId
+          schema: { type: string }
+          description: Optional filter by therapy (if you later link activities ↔ therapies)
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Paginated activities
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PaginatedActivity" }
+
+  /public/activities/{activityId}:
+    get:
+      tags: [Public]
+      summary: Get activity/event by id
+      operationId: publicGetActivity
+      parameters:
+        - $ref: "#/components/parameters/ActivityId"
+        - $ref: "#/components/parameters/Locale"
+      responses:
+        "200":
+          description: Activity
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Activity" }
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /ai/orient:
+    post:
+      tags: [AI]
+      summary: AI orientation search (natural language → therapies + professionals + contents)
+      operationId: aiOrient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OrientRequest" }
+            examples:
+              es_example:
+                value:
+                  locale: es
+                  query: "Estoy estresado y me cuesta dormir. ¿Qué me recomiendas?"
+                  location:
+                    lat: 39.57
+                    lng: 2.65
+      responses:
+        "200":
+          description: Orientation results
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OrientResponse" }
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /auth/professional/login:
+    post:
+      tags: [Professional]
+      summary: Professional login (placeholder)
+      description: |
+        Authentication method is intentionally left flexible (email+password, magic link, etc.).
+        This endpoint describes the token exchange shape used by the frontend.
+      operationId: professionalLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+              required: [email, password]
+      responses:
+        "200":
+          description: Auth success
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthToken" }
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /professional/me:
+    get:
+      tags: [Professional]
+      summary: Get my professional profile (owner view)
+      operationId: professionalGetMe
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Professional (owner view)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProfessionalOwner" }
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /professional/profile:
+    put:
+      tags: [Professional]
+      summary: Update professional profile
+      operationId: professionalUpdateProfile
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProfessionalProfileUpdate" }
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProfessionalOwner" }
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /professional/activities:
+    get:
+      tags: [Professional]
+      summary: List my activities
+      operationId: professionalListMyActivities
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Paginated activities
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PaginatedActivity" }
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    post:
+      tags: [Professional]
+      summary: Create a new activity (subject to plan limits)
+      operationId: professionalCreateActivity
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ActivityCreate" }
+      responses:
+        "201":
+          description: Created activity
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Activity" }
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /professional/verification-documents/presign:
+    post:
+      tags: [Professional]
+      summary: Create a presigned upload for a verification document
+      operationId: professionalPresignVerificationUpload
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: "#/components/schemas/VerificationDocumentType"
+                fileName: { type: string }
+                mimeType: { type: string }
+                sizeBytes: { type: integer, format: int64, minimum: 1 }
+              required: [type, fileName, mimeType, sizeBytes]
+      responses:
+        "200":
+          description: Presigned upload data (S3-style)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uploadUrl: { type: string, format: uri }
+                  method: { type: string, enum: ["PUT", "POST"] }
+                  headers:
+                    type: object
+                    additionalProperties: { type: string }
+                  fields:
+                    type: object
+                    additionalProperties: { type: string }
+                  fileKey: { type: string }
+                required: [uploadUrl, method, fileKey]
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /professional/verification-documents:
+    get:
+      tags: [Professional]
+      summary: List my verification documents
+      operationId: professionalListVerificationDocuments
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/VerificationDocument" }
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    post:
+      tags: [Professional]
+      summary: Register an uploaded verification document
+      operationId: professionalRegisterVerificationDocument
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type: { $ref: "#/components/schemas/VerificationDocumentType" }
+                fileKey:
+                  type: string
+                  description: Storage key returned by presign endpoint
+                fileName: { type: string }
+                mimeType: { type: string }
+                sizeBytes: { type: integer, format: int64, minimum: 1 }
+              required: [type, fileKey, fileName, mimeType, sizeBytes]
+      responses:
+        "201":
+          description: Document registered
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/VerificationDocument" }
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /auth/admin/login:
+    post:
+      tags: [Admin]
+      summary: Admin login (placeholder)
+      operationId: adminLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+              required: [email, password]
+      responses:
+        "200":
+          description: Auth success
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthToken" }
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /admin/professionals:
+    get:
+      tags: [Admin]
+      summary: List professionals (admin)
+      operationId: adminListProfessionals
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: query
+          name: verificationStatus
+          schema: { $ref: "#/components/schemas/VerificationStatus" }
+        - in: query
+          name: planCode
+          schema: { $ref: "#/components/schemas/PlanCode" }
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Paginated professionals
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PaginatedProfessionalAdmin" }
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /admin/professionals/{professionalId}/verification:
+    post:
+      tags: [Admin]
+      summary: Approve/reject a professional
+      operationId: adminSetProfessionalVerification
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - $ref: "#/components/parameters/ProfessionalId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status: { $ref: "#/components/schemas/VerificationStatus" }
+                note: { type: string }
+              required: [status]
+      responses:
+        "200":
+          description: Updated professional
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProfessionalAdmin" }
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /admin/professionals/{professionalId}/plan:
+    put:
+      tags: [Admin]
+      summary: Assign plan to a professional (manual in MVP)
+      operationId: adminAssignPlan
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - $ref: "#/components/parameters/ProfessionalId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                planCode: { $ref: "#/components/schemas/PlanCode" }
+              required: [planCode]
+      responses:
+        "200":
+          description: Updated professional
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProfessionalAdmin" }
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    Locale:
+      in: query
+      name: locale
+      schema: { $ref: "#/components/schemas/Locale" }
+      required: false
+      description: Response locale preference (server may still return localized objects)
+    Page:
+      in: query
+      name: page
+      schema: { type: integer, minimum: 1, default: 1 }
+    PageSize:
+      in: query
+      name: pageSize
+      schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+    ProfessionalId:
+      in: path
+      name: professionalId
+      required: true
+      schema: { type: string }
+    TherapyId:
+      in: path
+      name: therapyId
+      required: true
+      schema: { type: string }
+    ActivityId:
+      in: path
+      name: activityId
+      required: true
+      schema: { type: string }
+    ContentId:
+      in: path
+      name: contentId
+      required: true
+      schema: { type: string }
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        code: { type: string }
+        message: { type: string }
+        details:
+          type: object
+          additionalProperties: true
+      required: [code, message]
+
+    Locale:
+      type: string
+      enum: [es, ca, en, de]
+
+    LocalizedString:
+      type: object
+      properties:
+        es: { type: string }
+        ca: { type: string }
+        en: { type: string }
+        de: { type: string }
+      additionalProperties: false
+
+    PlanCode:
+      type: string
+      enum: [FREE, PRO, PREMIUM]
+
+    Plan:
+      type: object
+      properties:
+        id: { type: string }
+        code: { $ref: "#/components/schemas/PlanCode" }
+        name: { type: string }
+        eventLimitPerYear:
+          oneOf:
+            - type: integer
+              minimum: 0
+            - type: "null"
+        features:
+          type: object
+          properties:
+            profile: { type: boolean }
+            search: { type: boolean }
+            map: { type: boolean }
+            directContact: { type: boolean }
+            externalCalendarUrl: { type: boolean }
+            reviews: { type: boolean }
+            basicMetrics: { type: boolean }
+          required: [profile, search, map, directContact, externalCalendarUrl, reviews, basicMetrics]
+      required: [id, code, name, eventLimitPerYear, features]
+
+    Therapy:
+      type: object
+      properties:
+        id: { type: string }
+        category: { type: string }
+        name: { $ref: "#/components/schemas/LocalizedString" }
+        description: { $ref: "#/components/schemas/LocalizedString" }
+      required: [id, category, name, description]
+
+    Keyword:
+      type: object
+      properties:
+        id: { type: string }
+        labels: { $ref: "#/components/schemas/LocalizedString" }
+        synonyms:
+          type: array
+          items: { type: string }
+      required: [id, labels, synonyms]
+
+    Content:
+      type: object
+      properties:
+        id: { type: string }
+        therapyId: { type: string }
+        slug: { type: string }
+        title: { $ref: "#/components/schemas/LocalizedString" }
+        body: { $ref: "#/components/schemas/LocalizedString" }
+      required: [id, therapyId, slug, title, body]
+
+    GeoPoint:
+      type: object
+      properties:
+        lat: { type: number, format: double }
+        lng: { type: number, format: double }
+      required: [lat, lng]
+
+    VerificationStatus:
+      type: string
+      enum: [pending, approved, rejected]
+
+    ProfessionalListItem:
+      type: object
+      properties:
+        id: { type: string }
+        displayName: { type: string }
+        photoUrl: { type: string, format: uri }
+        city: { type: string }
+        location: { $ref: "#/components/schemas/GeoPoint" }
+        verificationStatus: { $ref: "#/components/schemas/VerificationStatus" }
+        planCode: { $ref: "#/components/schemas/PlanCode" }
+        therapies:
+          type: array
+          items: { $ref: "#/components/schemas/Therapy" }
+        keywords:
+          type: array
+          items: { $ref: "#/components/schemas/Keyword" }
+      required: [id, displayName, photoUrl, city, location, verificationStatus, planCode, therapies, keywords]
+
+    ProfessionalPublic:
+      type: object
+      properties:
+        id: { type: string }
+        firstName: { type: string }
+        lastName: { type: string }
+        displayName: { type: string }
+        photoUrl: { type: string, format: uri }
+        bio: { $ref: "#/components/schemas/LocalizedString" }
+        phone: { type: string }
+        email:
+          type: string
+          format: email
+          description: Included for direct contact; consider obfuscation/rate limiting
+        website: { type: string, format: uri }
+        city: { type: string }
+        location: { $ref: "#/components/schemas/GeoPoint" }
+        verificationStatus: { $ref: "#/components/schemas/VerificationStatus" }
+        planCode: { $ref: "#/components/schemas/PlanCode" }
+        externalCalendarUrl:
+          oneOf:
+            - type: string
+              format: uri
+            - type: "null"
+        social:
+          type: object
+          properties:
+            instagram: { type: string, format: uri }
+            facebook: { type: string, format: uri }
+            linkedin: { type: string, format: uri }
+          additionalProperties: false
+        therapies:
+          type: array
+          items: { $ref: "#/components/schemas/Therapy" }
+        keywords:
+          type: array
+          items: { $ref: "#/components/schemas/Keyword" }
+      required:
+        [
+          id,
+          firstName,
+          lastName,
+          displayName,
+          photoUrl,
+          bio,
+          phone,
+          email,
+          website,
+          city,
+          location,
+          verificationStatus,
+          planCode,
+          externalCalendarUrl,
+          social,
+          therapies,
+          keywords
+        ]
+
+    ProfessionalOwner:
+      allOf:
+        - $ref: "#/components/schemas/ProfessionalPublic"
+        - type: object
+          properties:
+            createdAt: { type: string, format: date-time }
+            publishedAt:
+              oneOf:
+                - type: string
+                  format: date-time
+                - type: "null"
+          required: [createdAt, publishedAt]
+
+    ProfessionalAdmin:
+      allOf:
+        - $ref: "#/components/schemas/ProfessionalOwner"
+        - type: object
+          properties:
+            notes:
+              type: array
+              items: { type: string }
+          required: [notes]
+
+    ProfessionalProfileUpdate:
+      type: object
+      properties:
+        firstName: { type: string }
+        lastName: { type: string }
+        photoUrl: { type: string, format: uri }
+        bio: { $ref: "#/components/schemas/LocalizedString" }
+        phone: { type: string }
+        website: { type: string, format: uri }
+        city: { type: string }
+        location: { $ref: "#/components/schemas/GeoPoint" }
+        externalCalendarUrl:
+          oneOf:
+            - type: string
+              format: uri
+            - type: "null"
+        therapyIds:
+          type: array
+          items: { type: string }
+        keywordIds:
+          type: array
+          items: { type: string }
+        social:
+          type: object
+          properties:
+            instagram: { type: string, format: uri }
+            facebook: { type: string, format: uri }
+            linkedin: { type: string, format: uri }
+          additionalProperties: false
+
+    ActivityType:
+      type: string
+      enum: [taller, curso, retiro, formacion, encuentro]
+
+    Activity:
+      type: object
+      properties:
+        id: { type: string }
+        professionalId: { type: string }
+        type: { $ref: "#/components/schemas/ActivityType" }
+        title: { $ref: "#/components/schemas/LocalizedString" }
+        description: { $ref: "#/components/schemas/LocalizedString" }
+        startsAt: { type: string, format: date-time }
+        locationName: { type: string }
+        city: { type: string }
+        address: { type: string }
+        location: { $ref: "#/components/schemas/GeoPoint" }
+        signupUrl: { type: string, format: uri }
+      required:
+        [
+          id,
+          professionalId,
+          type,
+          title,
+          description,
+          startsAt,
+          locationName,
+          city,
+          address,
+          location,
+          signupUrl
+        ]
+
+    ActivityCreate:
+      type: object
+      properties:
+        type: { $ref: "#/components/schemas/ActivityType" }
+        title: { $ref: "#/components/schemas/LocalizedString" }
+        description: { $ref: "#/components/schemas/LocalizedString" }
+        startsAt: { type: string, format: date-time }
+        locationName: { type: string }
+        city: { type: string }
+        address: { type: string }
+        location: { $ref: "#/components/schemas/GeoPoint" }
+        signupUrl: { type: string, format: uri }
+      required:
+        [
+          type,
+          title,
+          description,
+          startsAt,
+          locationName,
+          city,
+          address,
+          location,
+          signupUrl
+        ]
+
+    VerificationDocumentType:
+      type: string
+      enum: [professional_id, national_id]
+
+    VerificationDocument:
+      type: object
+      properties:
+        id: { type: string }
+        professionalId: { type: string }
+        type: { $ref: "#/components/schemas/VerificationDocumentType" }
+        status: { $ref: "#/components/schemas/VerificationStatus" }
+        fileName: { type: string }
+        mimeType: { type: string }
+        sizeBytes: { type: integer, format: int64 }
+        uploadedAt: { type: string, format: date-time }
+        reviewedAt:
+          oneOf:
+            - type: string
+              format: date-time
+            - type: "null"
+        reviewedByAdminId:
+          oneOf:
+            - type: string
+            - type: "null"
+      required:
+        [id, professionalId, type, status, fileName, mimeType, sizeBytes, uploadedAt, reviewedAt, reviewedByAdminId]
+
+    AuthToken:
+      type: object
+      properties:
+        accessToken: { type: string }
+        tokenType: { type: string, enum: ["Bearer"] }
+        expiresIn: { type: integer, description: Seconds until expiry }
+      required: [accessToken, tokenType, expiresIn]
+
+    Paginated:
+      type: object
+      properties:
+        items:
+          type: array
+          items: {}
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1 }
+        total: { type: integer, minimum: 0 }
+      required: [items, page, pageSize, total]
+
+    PaginatedProfessionalListItem:
+      allOf:
+        - $ref: "#/components/schemas/Paginated"
+        - type: object
+          properties:
+            items:
+              type: array
+              items: { $ref: "#/components/schemas/ProfessionalListItem" }
+
+    PaginatedProfessionalAdmin:
+      allOf:
+        - $ref: "#/components/schemas/Paginated"
+        - type: object
+          properties:
+            items:
+              type: array
+              items: { $ref: "#/components/schemas/ProfessionalAdmin" }
+
+    PaginatedActivity:
+      allOf:
+        - $ref: "#/components/schemas/Paginated"
+        - type: object
+          properties:
+            items:
+              type: array
+              items: { $ref: "#/components/schemas/Activity" }
+
+    OrientRequest:
+      type: object
+      properties:
+        locale: { $ref: "#/components/schemas/Locale" }
+        query:
+          type: string
+          minLength: 1
+          maxLength: 500
+        location:
+          allOf:
+            - $ref: "#/components/schemas/GeoPoint"
+          description: Optional location for proximity-aware suggestions
+      required: [locale, query]
+
+    OrientResponse:
+      type: object
+      properties:
+        detectedKeywordIds:
+          type: array
+          items: { type: string }
+        suggestedTherapyIds:
+          type: array
+          items: { type: string }
+        suggestedProfessionalIds:
+          type: array
+          items: { type: string }
+        suggestedContentIds:
+          type: array
+          items: { type: string }
+        explanations:
+          type: object
+          properties:
+            keywords:
+              type: array
+              items:
+                type: object
+                properties:
+                  keywordId: { type: string }
+                  why: { type: string }
+                required: [keywordId, why]
+            therapies:
+              type: array
+              items:
+                type: object
+                properties:
+                  therapyId: { type: string }
+                  why: { type: string }
+                required: [therapyId, why]
+            professionals:
+              type: array
+              items:
+                type: object
+                properties:
+                  professionalId: { type: string }
+                  why: { type: string }
+                required: [professionalId, why]
+          additionalProperties: false
+        disclaimer: { type: string }
+      required:
+        [
+          detectedKeywordIds,
+          suggestedTherapyIds,
+          suggestedProfessionalIds,
+          suggestedContentIds,
+          explanations,
+          disclaimer
+        ]
+
